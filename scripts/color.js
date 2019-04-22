@@ -2,6 +2,8 @@ let NUM_SQUARES = 3;
 let gameSection = document.querySelector(".game");
 let colorPar = document.querySelector(".colorParagraph");
 let newGameBtn = document.querySelector(".newGame");
+let hardModeBtn = document.querySelector(".hardMode");
+let easyModeBtn = document.querySelector(".easyMode");
 let head = document.querySelector(".head");
 
 
@@ -29,8 +31,32 @@ let init = () => {
         removeListeners();
         removeListeners = setColorGuessListeners(squares, color);
     });
-}
 
+    hardModeBtn.addEventListener("click", () => {
+        color = randomRGB();
+        colorPar.textContent = color;
+        head.style.backgroundColor = "rgb(10, 189, 202)";
+        removeListeners();
+        removeSquares();
+        NUM_SQUARES = 6;
+        squares = createSquares();
+        chooseCorrectSquare(squares, color);
+        removeListeners = setColorGuessListeners(squares, color);    
+    });
+
+    easyModeBtn.addEventListener("click", () => {
+        color = randomRGB();
+        colorPar.textContent = color;
+        head.style.backgroundColor = "rgb(10, 189, 202)";
+        removeListeners();
+        removeSquares();
+        NUM_SQUARES = 3;
+        squares = createSquares();
+        chooseCorrectSquare(squares, color);
+        removeListeners = setColorGuessListeners(squares, color);       
+    });
+
+}
 
 let createSquares = () => {
     let squaresArray = [];
@@ -42,6 +68,14 @@ let createSquares = () => {
     }
     return squaresArray;
 }
+
+
+let removeSquares = () => {
+  while(gameSection.firstChild){
+      gameSection.removeChild(gameSection.firstChild);
+  }
+}
+
 
 let chooseCorrectSquare = (squares, color) => {
     squares.forEach(square => {
